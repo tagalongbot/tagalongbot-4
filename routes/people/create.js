@@ -9,6 +9,11 @@ let { uploadCloudinaryImage, getFaceFromImage } = require('../../libs/cloudinary
 
 let { capitalizeString } = require('../../libs/helpers/strings.js');
 
+let formatMessengerLink = (messenger_link) => {
+  let formatted_messenger_link = messenger_link.startsWith('https://') ? messenger_link : `https://${messenger_link}`;
+  return formatted_messenger_link;
+}
+
 let createProfile = async ({ query }, res) => {
   let {
     messenger_user_id,
@@ -39,7 +44,7 @@ let createProfile = async ({ query }, res) => {
     ['Age']: Number(profile_age),
     ['City']: capitalizeString(profile_city),
     ['Country']: profile_country.toUpperCase(),
-    ['Messenger Link']: messenger_link,
+    ['Messenger Link']: formatMessengerLink(messenger_link),
     ['Profile Image URL 1']: profile_image,
     ['Is Profile Hidden']: 'NO',
   }
